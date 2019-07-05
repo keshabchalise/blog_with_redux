@@ -8,11 +8,33 @@ class PostList extends Component {
         this.props.fetchPosts();
     }
 
+    renderPosts(){
+        console.log(this.props.posts)
+        return this.props.posts.map(post=>{
+            return (
+            <div className="item" key={post.id}>
+                <div className="content">
+                    <div className="description">
+                        <h2>{post.title}</h2>
+                        <p>{post.body}</p>
+                    </div>
+                </div>
+            </div>
+            );
+        })
+    }
+
     render() { 
-        return ( <div >
-            <h3>PostList</h3>
-        </div> );
+        return ( 
+        <div className="ui relaxed divided list" >
+            {this.renderPosts()}
+        </div> 
+        );
     }
 }
+
+const mapStateToProps = (state)=>{
+    return {posts:state.posts}
+}
  
-export default connect(null,{fetchPosts:fetchPosts})(PostList);
+export default connect(mapStateToProps,{fetchPosts:fetchPosts})(PostList);
